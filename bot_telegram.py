@@ -150,10 +150,38 @@ def handler_message(message):
 			markup.add(types.KeyboardButton("вернуться в главное меню🔙"))
 			bot.send_message(message.from_user.id,answer_text,reply_markup=markup)
 		else:
+			for i in dictforrightout.arraytime:
+				answer_text+=i
+				answer_text+='\n'
+				sqlite_connection = sqlite3.connect('sqlite_python.db')
+				cursor = sqlite_connection.cursor()
+				#print(fileforflag.data)
+				sqlite_query='''SELECT TASK_NAME FROM TASK
+				WHERE USERNAME=\''''+ str(message.from_user.id)+"\' AND FACULTY= \'"+fileforflag.dictforfaculty[str(message.from_user.id)]+'''\'
+				AND DATE= \''''+fileforflag.dictfordata[str(message.from_user.id)]+"\' AND TIME = \'"+i+"\';"
+				cursor.execute(sqlite_query)
+				findtask=cursor.fetchall()
+				cursor.close()
+				if (len(findtask)!=0):
+					answer_text+=findtask[0][0]
+					answer_text+='\n'
+			sqlite_connection = sqlite3.connect('sqlite_python.db')
+			cursor = sqlite_connection.cursor()
+			#print(fileforflag.data)
+			sqlite_query='''SELECT TASK_NAME FROM TASK
+			WHERE USERNAME=\''''+ str(message.from_user.id)+"\' AND FACULTY= \'"+fileforflag.dictforfaculty[str(message.from_user.id)]+'''\'
+			AND DATE= \''''+fileforflag.dictfordata[str(message.from_user.id)]+"\' AND TIME = \'\';"
+			cursor.execute(sqlite_query)
+			findtask=cursor.fetchall()
+			cursor.close()
+			if (len(findtask)!=0):
+				answer_text+=findtask[0][0]
+				answer_text+='\n'
 			markup.add(types.KeyboardButton("выбрать другую дату"))
 			markup.add(types.KeyboardButton("записать свои дела"))
 			markup.add(types.KeyboardButton("вернуться в главное меню🔙"))
-			answer_text="занятий в этот день нет)\nможете выбрать другую дату или записать свои собственные дела"
+			if (len(answer_text)==0):
+				answer_text="занятий в этот день нет)\nможете выбрать другую дату или записать свои собственные дела"
 			bot.send_message(message.from_user.id,answer_text,reply_markup=markup)
 
 	elif (message.text in Faculty.PrintCourse(message.text)) and (fileforflag.flag==0):
@@ -254,10 +282,38 @@ def handler_message(message):
 				markup.add(types.KeyboardButton("вернуться в главное меню🔙"))
 				bot.send_message(message.from_user.id,answer_text,reply_markup=markup)
 			else:
+				for i in dictforrightout.arraytime:
+					answer_text+=i
+					answer_text+='\n'
+					sqlite_connection = sqlite3.connect('sqlite_python.db')
+					cursor = sqlite_connection.cursor()
+					#print(fileforflag.data)
+					sqlite_query='''SELECT TASK_NAME FROM TASK
+					WHERE USERNAME=\''''+ str(message.from_user.id)+"\' AND FACULTY= \'"+fileforflag.dictforfaculty[str(message.from_user.id)]+'''\'
+					AND DATE= \''''+fileforflag.dictfordata[str(message.from_user.id)]+"\' AND TIME = \'"+i+"\';"
+					cursor.execute(sqlite_query)
+					findtask=cursor.fetchall()
+					cursor.close()
+					if (len(findtask)!=0):
+						answer_text+=findtask[0][0]
+						answer_text+='\n'
+				sqlite_connection = sqlite3.connect('sqlite_python.db')
+				cursor = sqlite_connection.cursor()
+				#print(fileforflag.data)
+				sqlite_query='''SELECT TASK_NAME FROM TASK
+				WHERE USERNAME=\''''+ str(message.from_user.id)+"\' AND FACULTY= \'"+fileforflag.dictforfaculty[str(message.from_user.id)]+'''\'
+				AND DATE= \''''+fileforflag.dictfordata[str(message.from_user.id)]+"\' AND TIME = \'\';"
+				cursor.execute(sqlite_query)
+				findtask=cursor.fetchall()
+				cursor.close()
+				if (len(findtask)!=0):
+					answer_text+=findtask[0][0]
+					answer_text+='\n'
 				markup.add(types.KeyboardButton("выбрать другую дату"))
 				markup.add(types.KeyboardButton("записать свои дела"))
 				markup.add(types.KeyboardButton("вернуться в главное меню🔙"))
-				answer_text="занятий в этот день нет)\nможете выбрать другую дату или записать свои собственные дела"
+				if (len(answer_text)==0):
+					answer_text="занятий в этот день нет)\nможете выбрать другую дату или записать свои собственные дела"
 				bot.send_message(message.from_user.id,answer_text,reply_markup=markup)
 		else:
 			fileforflag.dictforflag[str(message.from_user.id)]=1
@@ -331,10 +387,38 @@ def handler_message(message):
 				markup.add(types.KeyboardButton("вернуться в главное меню🔙"))
 				bot.send_message(message.from_user.id,answer_text,reply_markup=markup)
 			else:
+				for i in dictforrightout.arraytime:
+					answer_text+=i
+					answer_text+='\n'
+					sqlite_connection = sqlite3.connect('sqlite_python.db')
+					cursor = sqlite_connection.cursor()
+					#print(fileforflag.data)
+					sqlite_query='''SELECT TASK_NAME FROM TASK
+					WHERE USERNAME=\''''+ str(message.from_user.id)+"\' AND FACULTY= \'"+fileforflag.dictforfaculty[str(message.from_user.id)]+'''\'
+					AND DATE= \''''+fileforflag.dictfordata[str(message.from_user.id)]+"\' AND TIME = \'"+i+"\';"
+					cursor.execute(sqlite_query)
+					findtask=cursor.fetchall()
+					cursor.close()
+					if (len(findtask)!=0):
+						answer_text+=findtask[0][0]
+						answer_text+='\n'
+				sqlite_connection = sqlite3.connect('sqlite_python.db')
+				cursor = sqlite_connection.cursor()
+				#print(fileforflag.data)
+				sqlite_query='''SELECT TASK_NAME FROM TASK
+				WHERE USERNAME=\''''+ str(message.from_user.id)+"\' AND FACULTY= \'"+fileforflag.dictforfaculty[str(message.from_user.id)]+'''\'
+				AND DATE= \''''+fileforflag.dictfordata[str(message.from_user.id)]+"\' AND TIME = \'\';"
+				cursor.execute(sqlite_query)
+				findtask=cursor.fetchall()
+				cursor.close()
+				if (len(findtask)!=0):
+					answer_text+=findtask[0][0]
+					answer_text+='\n'
 				markup.add(types.KeyboardButton("выбрать другую дату"))
 				markup.add(types.KeyboardButton("записать свои дела"))
 				markup.add(types.KeyboardButton("вернуться в главное меню🔙"))
-				answer_text="занятий в этот день нет)\nможете выбрать другую дату или записать свои собственные дела"
+				if (len(answer_text)==0):
+					answer_text="занятий в этот день нет)\nможете выбрать другую дату или записать свои собственные дела"
 				bot.send_message(message.from_user.id,answer_text,reply_markup=markup)
 		else:
 			fileforflag.dictforflag[str(message.from_user.id)]=1
@@ -478,6 +562,7 @@ def handler_message(message):
 				answer_text+='\n'
 
 		print(answer_text)
+
 		markup.add(types.KeyboardButton("выбрать другую дату"))
 		markup.add(types.KeyboardButton("записать свои дела"))
 		markup.add(types.KeyboardButton("вернуться в главное меню🔙"))
