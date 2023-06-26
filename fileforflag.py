@@ -1,4 +1,9 @@
 import sqlite3
+dictforflag={}
+dictfordata={}
+dictfortime={}
+dictforfaculty={}
+
 flag=0
 data=""
 def FindFaculty(message):
