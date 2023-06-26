@@ -1,8 +1,18 @@
 import requests
 from bs4 import BeautifulSoup
+import re 
 
-#faculty=["AK","БМТ","ИБМ","ИСОТ","ИУ","Л","МТ","ОЭ","ПС","РК","РКТ","РЛ","РТ", "СГН", "СМ", "ФН", "Э", "ЮР"]
-
+faculty=""
+ListOfFaculty=[]
+ListOfCourse=[]
+def func_for_delete_space(text):
+	a=''
+	for i in text:
+		if (i!=' ') and (i!='\n'):
+			a+=i
+	return a
+	
+#Function for creating connection with bmstu.ru
 def get_html(url):
 	try:
 		result = requests.get(url)
@@ -12,50 +22,58 @@ def get_html(url):
 		print('Server error')
 		return False
 		
-def FindShedule(url):	
-	array_chislitel=[]
-	array_znamenatel=[]
-	url='https://lks.bmstu.ru'+url	
+def FindFaculty():
+	ListOfFaculty=[]
+	url='https://lks.bmstu.ru/schedule/list'
 	html=get_html(url)
 	soup=BeautifulSoup(html,'html.parser')
+	for info in soup.findAll('h4', class_='list-group-item-heading'):
+		ListOfFaculty.append(info.text)
+	return ListOfFaculty
 
-	for info in soup.findAll('table', class_='table table-bordered text-center table-responsive'):
-		day_of_week=""
-		time=""
-		subject=""
-		day_of_week=info.find('strong').text
-		for info1 in info.find_all('tr'):
-			time=info1.find('td',attrs={'class':'bg-grey text-nowrap'})
-			if time!=None:
-				both=info1.find('td',attrs={'colspan':'2'})
-				if (both!=None):
-					subject=both.find("span")
-				else:
-					subject=info1.find('td',attrs={'class':'text-info-bold'})		
-					
-				
-				subject=subject.text
-				array_chislitel.append([day_of_week,time.text,subject])
-	for info in soup.findAll('table', class_='table table-bordered text-center table-responsive'):
-		day_of_week=""
-		time=""
-		subject=""
-		day_of_week=info.find('strong').text
-		for info1 in info.find_all('tr'):
-			time=info1.find('td',attrs={'class':'bg-grey text-nowrap'})
-			if time!=None:
-				both=info1.find('td',attrs={'colspan':'2'})
-				if (both!=None):
-					subject=both.find("span")
-				else:
-					subject=info1.find('td',attrs={'class':'text-primary'})		
-					
-				
-				subject=subject.text
-				array_znamenatel.append([day_of_week,time.text,subject])
+def ListOfNumFaculty(faculty):
+	url='https://lks.bmstu.ru/schedule/list'
+	html=get_html(url)
+	soup=BeautifulSoup(html,'html.parser')
+	find=0
+	ListOfNum=[]
+	for info in soup.findAll('div', class_='panel panel-default'):
+		for info1 in info.findAll('a',class_='btn text-primary'):
+			for info2 in info1.findAll('h4'):
+				if re.match(faculty,info2.text):
+					ListOfNum.append(info2.text)
+					find=1
+		if (find):
+			break
+	return ListOfNum
+	
+def PrintCourse(faculty):
+	url='https://lks.bmstu.ru/schedule/list'
+	html=get_html(url)
+	find=0
+	soup=BeautifulSoup(html,'html.parser')
+	ListOfNum=[]
+	for info in soup.findAll('div', class_='row'):
+		for info1 in info.findAll('a',class_='btn btn-primary col-1 rounded schedule-indent'):
+			infofind=func_for_delete_space(info1.text)
+			if re.match(faculty,infofind):
+				ListOfNum.append(infofind)
+				find=1
+		if (find==1):
+			break	
+	return ListOfNum
+	
+def FINDALL(faculty):
+	url='https://lks.bmstu.ru/schedule/list'
+	html=get_html(url)
+	soup=BeautifulSoup(html,'html.parser')
+	for info in soup.findAll('div', class_='row'):
+		for info1 in info.findAll('a',class_='btn btn-primary col-1 rounded schedule-indent'):
+			infofind=func_for_delete_space(info1.text)
+			if re.match(faculty,infofind):
+				return info1.attrs.get("href")
+			
 			
 
-	return array_chislitel,array_znamenatel
-		 	
-	
+					
 		
