@@ -1,5 +1,6 @@
 from datetime import datetime 
 from calendar import monthrange
+import dictforrightout
 import sqlite3
 
 text="Сегодняшняя дата: " + str(datetime.now().day) +".0"+ str(datetime.now().month) + "." +str(datetime.now().year)+ '''\nПоказать запланированные дела? '''
@@ -20,7 +21,8 @@ def func_for_date(username,faculty,array_chislitel,array_znamenatel):
 #Недель всего 17
 #Воскресенья нет
 
-
+	for i in range (0,7):
+		dictforrightout.arraytime.append(array_chislitel[i][1])
 	
 
 
